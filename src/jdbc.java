@@ -7,5 +7,6 @@ public class jdbc{
                 "jdbc:oracle:thin:@localhost:1521:XE",
                 "system",
                 "Tanish2006#");
+
     }
 }
