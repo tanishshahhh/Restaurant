@@ -6,7 +6,7 @@ public class jdbc{
         return DriverManager.getConnection(
                 "jdbc:oracle:thin:@localhost:1521:XE",
                 "system",
-                "1612#");
+                "1612");
 
 
 
