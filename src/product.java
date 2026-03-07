@@ -1,6 +1,6 @@
 public class product {
     int pro_id;
-    int pro_name;
+    String pro_name;
     int pro_qty;
 
     public int getPro_id() {
@@ -11,11 +11,11 @@ public class product {
         this.pro_id = pro_id;
     }
 
-    public int getPro_name() {
+    public String getPro_name() {
         return pro_name;
     }
 
-    public void setPro_name(int pro_name) {
+    public void setPro_name(String pro_name) {
         this.pro_name = pro_name;
     }
 
