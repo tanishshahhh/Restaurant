@@ -130,7 +130,7 @@ public class Crud {
 
         ps.setInt(1, o.getOrder_id());
         ps.setInt(2, o.getCust_id());
-        ps.setInt(3, o.getOrder_date());
+        ps.setString(3, o.getOrder_date());
         ps.setInt(4, o.getTotal());
         ps.setInt(5, o.getTax());
         ps.setInt(6, o.getDiscount());
@@ -146,7 +146,7 @@ public class Crud {
         PreparedStatement ps = con.prepareStatement("update order_details set cust_id=?, order_date=?, total=?, tax=?, discount=?, final_bill=? where order_id=?");
 
         ps.setInt(1, o.getCust_id());
-        ps.setInt(2, o.getOrder_date());
+        ps.setString(2, o.getOrder_date());
         ps.setInt(3, o.getTotal());
         ps.setInt(4, o.getTax());
         ps.setInt(5, o.getDiscount());
@@ -203,7 +203,7 @@ public class Crud {
 
         PreparedStatement ps = con.prepareStatement("insert into order_product values(?,?,?,?,?,?,?)");
 
-        ps.setInt(1, op.getOrder_product());
+        ps.setString(1, op.getOrder_product());
         ps.setInt(2, op.getOrder_product_id());
         ps.setInt(3, op.getOrder_id());
         ps.setInt(4, op.getProduct_id());
@@ -218,15 +218,15 @@ public class Crud {
     // daily sales
     public void dailySales(Connection con,order_details o) throws SQLException {
         PreparedStatement ps= con.prepareStatement("select * from order_product where o.order_date=?");
-        ps.setInt(1, o.getOrder_date());
+        ps.setString(1, o.getOrder_date());
 
     }
 
     // monthly sales report
     public void MonthlySales(Connection con,order_details o) throws SQLException {
         PreparedStatement ps= con.prepareStatement("select * from order_products where o.order_date in (?,?)");
-        ps.setInt(1, o.getOrder_date());
-        ps.setInt(2,o.getOrder_date());
+        ps.setString(1, o.getOrder_date());
+        ps.setString(2,o.getOrder_date());
 
     }
 

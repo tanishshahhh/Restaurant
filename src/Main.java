@@ -9,7 +9,7 @@ public class Main {
         int mainChoice;
 
         do {
-            System.out.println("   RESTAURANT MANAGEMENT SYSTEM ");
+            System.out.println("RESTAURANT MANAGEMENT SYSTEM ");
             System.out.println("1. PRODUCT MENU (Inventory)");
             System.out.println("2. CUSTOMER MENU (Profiles)");
             System.out.println("3. ORDER MENU (Billing & Sales)");
@@ -152,11 +152,10 @@ public class Main {
                     int OrderChoice;
                     System.out.println("---Order Menu---");
                     System.out.println("1.Insert Order");
-                    System.out.println("2.Update Order");
-                    System.out.println("3.Delete Order");
-                    System.out.println("4.View Order");
-                    System.out.println("5.Search Order");
-                    System.out.println("6.Exit");
+                    System.out.println("2.Delete Order");
+                    System.out.println("3.View Order");
+                    System.out.println("4.Search Order");
+                    System.out.println("5.Exit");
 
                     System.out.println("Enter your input: ");
                     OrderChoice=sc.nextInt();
@@ -177,11 +176,10 @@ public class Main {
                             cdInsert.setDiscount((int) (cdInsert.getFinal_bill() * 0.10));
 
                             String opt6;
+                            int sr=1;
                             do{
-                                System.out.println("Enter Bill No.");
-                                cpInsert.setOrder_product_id(sc.nextInt());
-                                System.out.println("Enter Order Id");
-                                cdInsert.setOrder_id(sc.nextInt());
+                                cpInsert.setOrder_product_id(sr);
+                                cdInsert.setOrder_id(cdInsert.getOrder_id());
                                 System.out.println("Enter Product Id:");
                                 cpInsert.setProduct_id(sc.nextInt());
                                 System.out.println("Enter Product Name: ");
@@ -191,13 +189,85 @@ public class Main {
                                 System.out.println("Enter Product rate: ");
                                 cpInsert.setPro_rate(sc.nextInt());
                                 cpInsert.setPrice(cpInsert.getProduct_qty()*cpInsert.getPro_rate());
+                                sr++;
 
                                 System.out.println("do you want to add new product to bill (y/n): ");
                                 opt6=sc.next();
 
                             }while(opt6.equalsIgnoreCase("y"));
+                            break;
 
+                        case 2:
+                            order_details cdDelete=new order_details();
+                            System.out.println("Enter Order id: ");
+                            cdDelete.setOrder_id(sc.nextInt());
+                            crud.deleteOrder(con,cdDelete.order_id);
+                            break;
+
+                        case 3:
+                            crud.viewOrders(con);
+                            break;
+
+                        case 4:
+                            order_details odSearch=new order_details();
+                            System.out.println("Enter Order Id:");
+                            odSearch.setOrder_id(sc.nextInt());
+                            crud.searchOrder(con,odSearch.order_id);
+                            break;
+                        case 5:
+                            System.out.println("exiting..");
+                            break;
+                        default:
+                            System.out.println("Invalid input");
+                            break;
                     }
+
+                case 4:
+                    int reportChoice;
+                    do {
+                        System.out.println("--- REPORTS ---");
+                        System.out.println("1. Daily sales");
+                        System.out.println("2. Customized sales according to date");
+                        System.out.println("3. Top selling items");
+                        System.out.println("4. Least selling items");
+                        System.out.println("5. BACK");
+
+                        System.out.print("Select Option: ");
+                        reportChoice = sc.nextInt();
+
+                        switch (reportChoice) {
+                            case 1:
+                                order_details dailyOrder = new order_details();
+                                System.out.print("Enter Date (YYYY-MM-DD) for Daily Sales: ");
+                                dailyOrder.setOrder_date(sc.next());
+                                crud.dailySales(con, dailyOrder);
+                                break;
+                            case 2:
+                                order_details customOrder = new order_details();
+                                System.out.print("Enter Date (YYYY-MM-DD) for Sales Report: ");
+                                customOrder.setOrder_date(sc.next());
+                                crud.MonthlySales(con, customOrder);
+                                break;
+                            case 3:
+                                crud.topSellingItems(con);
+                                break;
+                            case 4:
+                                crud.leastSellingItems(con);
+                                break;
+                            case 5:
+                                System.out.println("exiting..");
+                                break;
+                            default:
+                                System.out.println("Invalid Input");
+                                break;
+                        }
+                    } while (reportChoice != 5);
+                    break;
+
+                case 5:
+                    System.out.println("Exiting Restaurant Management System...");
+                    break;
+
                 default:
                     System.out.println("Invalid Input");
                     break;
