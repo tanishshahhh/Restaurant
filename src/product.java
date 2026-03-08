@@ -3,6 +3,17 @@ public class product {
     String pro_name;
     int pro_qty;
 
+
+    public product(int pro_id, String pro_name, int pro_qty) {
+        this.pro_id = pro_id;
+        this.pro_name = pro_name;
+        this.pro_qty = pro_qty;
+    }
+
+    public product() {
+
+    }
+
     public int getPro_id() {
         return pro_id;
     }

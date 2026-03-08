@@ -4,6 +4,18 @@ public class customer {
     int cust_number;
     String cust_adress;
 
+
+    public customer(int cust_id, String cust_name, int cust_number, String cust_adress) {
+        this.cust_id = cust_id;
+        this.cust_name = cust_name;
+        this.cust_number = cust_number;
+        this.cust_adress = cust_adress;
+    }
+
+    public customer() {
+
+    }
+
     public int getCust_id() {
         return cust_id;
     }
