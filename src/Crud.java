@@ -61,7 +61,7 @@ public class Crud {
         }
     }
 
-    // ---------------- CUSTOMER CRUD ----------------
+    //  CUSTOMER
 
     public void insertCustomer(Connection con, customer c) throws Exception {
 
@@ -122,7 +122,7 @@ public class Crud {
     }
 
 
-    // ---------------- ORDER CRUD ----------------
+    // ORDER CRUD
 
     public void insertOrder(Connection con, order_details o) throws Exception {
 
@@ -130,7 +130,7 @@ public class Crud {
 
         ps.setInt(1, o.getOrder_id());
         ps.setInt(2, o.getCust_id());
-        ps.setString(3, o.getOrder_date());
+        ps.setInt(3, o.getOrder_date());
         ps.setInt(4, o.getTotal());
         ps.setInt(5, o.getTax());
         ps.setInt(6, o.getDiscount());
@@ -146,7 +146,7 @@ public class Crud {
         PreparedStatement ps = con.prepareStatement("update order_details set cust_id=?, order_date=?, total=?, tax=?, discount=?, final_bill=? where order_id=?");
 
         ps.setInt(1, o.getCust_id());
-        ps.setString(2, o.getOrder_date());
+        ps.setInt(2, o.getOrder_date());
         ps.setInt(3, o.getTotal());
         ps.setInt(4, o.getTax());
         ps.setInt(5, o.getDiscount());
@@ -196,6 +196,62 @@ public class Crud {
             System.out.println("Tax: " + rs.getInt(5));
             System.out.println("Discount: " + rs.getInt(6));
             System.out.println("Final Bill: " + rs.getInt(7));
+        }
+    }
+
+    public void insertOrderProduct(Connection con, order_product op) throws Exception {
+
+        PreparedStatement ps = con.prepareStatement("insert into order_product values(?,?,?,?,?,?,?)");
+
+        ps.setInt(1, op.getOrder_product());
+        ps.setInt(2, op.getOrder_product_id());
+        ps.setInt(3, op.getOrder_id());
+        ps.setInt(4, op.getProduct_id());
+        ps.setInt(5, op.getProduct_qty());
+        ps.setInt(6, op.getPro_rate());
+        ps.setInt(7, op.getPrice());
+
+        ps.executeUpdate();
+        System.out.println("Order Product Added");
+    }
+
+    // daily sales
+    public void dailySales(Connection con,order_details o) throws SQLException {
+        PreparedStatement ps= con.prepareStatement("select * from order_product where o.order_date=?");
+        ps.setInt(1, o.getOrder_date());
+
+    }
+
+    // monthly sales report
+    public void MonthlySales(Connection con,order_details o) throws SQLException {
+        PreparedStatement ps= con.prepareStatement("select * from order_products where o.order_date in (?,?)");
+        ps.setInt(1, o.getOrder_date());
+        ps.setInt(2,o.getOrder_date());
+
+    }
+
+    // top selling items
+    public void topSellingItems(Connection con) throws Exception {
+        String query = "SELECT p.pro_name, SUM(op.product_qty) as total_sold " +
+                "FROM order_product op JOIN product p ON op.product_id = p.pro_id " +
+                "GROUP BY p.pro_name ORDER BY total_sold DESC";
+        Statement st = con.createStatement();
+        ResultSet rs = st.executeQuery(query);
+        System.out.println("--- TOP SELLING ITEMS ---");
+        while (rs.next()) {
+            System.out.println(rs.getString(1) + "Units Sold: " + rs.getInt(2));
+        }
+    }
+    // least selling items
+    public void leastSellingItems(Connection con) throws Exception {
+        String query = "SELECT p.pro_name, SUM(op.product_qty) as total_sold " +
+                "FROM order_product op JOIN product p ON op.product_id = p.pro_id " +
+                "GROUP BY p.pro_name ORDER BY total_sold ASC";
+        Statement st = con.createStatement();
+        ResultSet rs = st.executeQuery(query);
+        System.out.println("--- LEAST SELLING ITEMS ---");
+        while (rs.next()) {
+            System.out.println(rs.getString(1) + " Units Sold: " + rs.getInt(2));
         }
     }
 }

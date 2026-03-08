@@ -1,13 +1,13 @@
 public class order_product {
-    int order_product;
-    int order_product_id;// (PK)
+    String order_product;
+    int order_product_id;// (PK) bill no.
     int order_id;// (FK)
     int product_id;// (FK)
     int product_qty;
     int pro_rate;
     int price;
 
-    public order_product(int order_product, int order_product_id,int order_id, int product_id,int product_qty,int pro_rate, int price) {
+    public order_product(String order_product, int order_product_id,int order_id, int product_id,int product_qty,int pro_rate, int price) {
         this.order_product = order_product;
         this.order_product_id = order_product_id;
         this.order_id = order_id;
@@ -17,11 +17,15 @@ public class order_product {
         this.price=price;
     }
 
-    public int getOrder_product() {
+    public order_product() {
+
+    }
+
+    public String getOrder_product() {
         return order_product;
     }
 
-    public void setOrder_product(int order_product) {
+    public void setOrder_product(String order_product) {
         this.order_product = order_product;
     }
 

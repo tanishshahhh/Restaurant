@@ -18,6 +18,10 @@ public class order_details {
         this.final_bill = final_bill;
     }
 
+    public order_details() {
+
+    }
+
     public int getOrder_id() {
         return order_id;
     }
@@ -34,7 +38,7 @@ public class order_details {
         this.cust_id = cust_id;
     }
 
-    public int getOrder_date() {
+    public String getOrder_date() {
         return order_date;
     }
 
