@@ -10,10 +10,10 @@ public class Main {
 
         do {
             System.out.println("RESTAURANT MANAGEMENT SYSTEM ");
-            System.out.println("1. PRODUCT MENU (Inventory)");
-            System.out.println("2. CUSTOMER MENU (Profiles)");
-            System.out.println("3. ORDER MENU (Billing & Sales)");
-            System.out.println("4. REPORTS (Sales & Analytics)");
+            System.out.println("1. PRODUCT MENU");
+            System.out.println("2. CUSTOMER MENU");
+            System.out.println("3. ORDER MENU");
+            System.out.println("4. REPORTS");
             System.out.println("5. EXIT");
 
             System.out.print("Select Category: ");
