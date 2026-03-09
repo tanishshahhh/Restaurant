@@ -9,12 +9,15 @@ public class Main {
         int mainChoice;
 
         do {
+            System.out.println("==============================");
             System.out.println("RESTAURANT MANAGEMENT SYSTEM ");
+            System.out.println("==============================");
             System.out.println("1. PRODUCT MENU");
             System.out.println("2. CUSTOMER MENU");
             System.out.println("3. ORDER MENU");
             System.out.println("4. REPORTS");
             System.out.println("5. EXIT");
+            System.out.println("==============================");
 
             System.out.print("Select Category: ");
             mainChoice = sc.nextInt();
@@ -23,13 +26,16 @@ public class Main {
                 case 1:
                     int productChoice;
                     do {
-                        System.out.println("--- PRODUCT MENU ---");
+                        System.out.println("=======================");
+                        System.out.println("\t\tPRODUCT MENU ");
+                        System.out.println("=======================");
                         System.out.println("1. INSERT PRODUCT");
                         System.out.println("2. UPDATE PRODUCT");
                         System.out.println("3. DELETE PRODUCT");
                         System.out.println("4. VIEW PRODUCTS");
                         System.out.println("5. SEARCH PRODUCT");
                         System.out.println("6. BACK");
+                        System.out.println("=======================");
                         System.out.print("Select Option: ");
                         productChoice = sc.nextInt();
 
@@ -40,8 +46,10 @@ public class Main {
                                     product pInsert = new product();
                                     System.out.print("Enter Product ID: ");
                                     pInsert.setPro_id(sc.nextInt());
+                                    sc.nextLine();
                                     System.out.print("Enter Product Name: ");
                                     pInsert.setPro_name(sc.nextLine());
+                                    sc.nextLine();
                                     System.out.print("Enter Product Quantity: ");
                                     pInsert.setPro_qty(sc.nextInt());
                                     crud.insertProduct(con, pInsert);
@@ -53,8 +61,10 @@ public class Main {
                                 product pUpdate = new product();
                                 System.out.print("Enter Product ID to Update: ");
                                 pUpdate.setPro_id(sc.nextInt());
+                                sc.nextLine();
                                 System.out.print("Enter New Product Name: ");
                                 pUpdate.setPro_name(sc.nextLine());
+                                sc.nextLine();
                                 System.out.print("Enter New Product Quantity: ");
                                 pUpdate.setPro_qty(sc.nextInt());
                                 crud.updateProduct(con, pUpdate);
@@ -104,10 +114,13 @@ public class Main {
                                     customer cInsert = new customer();
                                     System.out.print("Enter Customer ID: ");
                                     cInsert.setCust_id(sc.nextInt());
+                                    sc.nextLine();
                                     System.out.print("Enter Customer Name: ");
                                     cInsert.setCust_name(sc.nextLine());
+                                    sc.nextLine();
                                     System.out.print("Enter Customer Number: ");
                                     cInsert.setCust_number(sc.nextInt());
+                                    sc.nextLine();
                                     System.out.print("Enter Customer Address: ");
                                     cInsert.setCust_adress(sc.nextLine());
                                     crud.insertCustomer(con, cInsert);
@@ -121,14 +134,16 @@ public class Main {
                                     customer cUpdate = new customer();
                                     System.out.print("Enter Customer ID to Update: ");
                                     cUpdate.setCust_id(sc.nextInt());
+                                    sc.nextLine();
                                     System.out.print("Enter New Customer Name: ");
                                     cUpdate.setCust_name(sc.nextLine());
+                                    sc.nextLine();
                                     System.out.print("Enter New Customer Number: ");
                                     cUpdate.setCust_number(sc.nextInt());
+                                    sc.nextLine();
                                     System.out.print("Enter New Customer Address: ");
                                     cUpdate.setCust_adress(sc.nextLine());
                                     crud.updateCustomer(con, cUpdate);
-                                    System.out.println("Updated");
                                     System.out.println("Do you want to Continue (y/n):");
                                     opt4 = sc.next();
                                 } while (opt4.equalsIgnoreCase("y"));
@@ -175,12 +190,15 @@ public class Main {
                             System.out.print("Enter order Id: ");
                             int oId = sc.nextInt();
                             cdInsert.setOrder_id(oId);
+                            sc.nextLine();
 
                             System.out.print("Enter Cust Id: ");
                             cdInsert.setCust_id(sc.nextInt());
+                            sc.nextLine();
 
                             System.out.print("Enter Order Date (YYYY-MM-DD): ");
                             cdInsert.setOrder_date(sc.next());
+                            sc.nextLine();
 
                             cdInsert.setFinal_bill(0);
                             cdInsert.setTax(0);
@@ -199,15 +217,15 @@ public class Main {
 
                                 System.out.print("Select Product ID from list: ");
                                 cpInsert.setpro_id(sc.nextInt());
-
+                                sc.nextLine();
                                 System.out.print("Enter product quantity: ");
                                 int qty = sc.nextInt();
                                 cpInsert.setProduct_qty(qty);
-
+                                sc.nextLine();
                                 System.out.print("Enter Product rate: ");
                                 int rate = sc.nextInt();
                                 cpInsert.setPro_rate(rate);
-
+                                sc.nextLine();
                                 int itemPrice = qty * rate;
                                 cpInsert.setPrice(itemPrice);
                                 runningTotal += itemPrice;
@@ -275,9 +293,13 @@ public class Main {
                                 break;
                             case 2:
                                 order_details customOrder = new order_details();
-                                System.out.print("Enter Date (YYYY-MM-DD) for Sales Report: ");
-                                customOrder.setOrder_date(sc.next());
-                                crud.CustomizedSales(con, customOrder);
+                                System.out.print("Enter Date (YYYY-MM-DD) from date:");
+                                String startdate=sc.next();
+                                sc.nextLine();
+                                System.out.print("Enter Date (YYYY-MM-DD) to date:");
+                                String enddate=sc.next();
+
+                                crud.CustomizedSales(con, startdate,enddate);
                                 break;
                             case 3:
                                 crud.topSellingItems(con);

@@ -256,11 +256,29 @@ public class Crud {
     }
 
     // Customeize time period sales sales report
-    public void CustomizedSales(Connection con,order_details o) throws SQLException {
-        PreparedStatement ps= con.prepareStatement("select * from hr.order_product where o.order_date in (?,?)");
-        ps.setString(1, o.getOrder_date());
-        ps.setString(2,o.getOrder_date());
+    public void CustomizedSales(Connection con, String startDate, String endDate) throws SQLException {
+        String sql = "SELECT op.PRO_ID, op.PRO_NAME, SUM(op.PRO_QTY) as total_qty " +
+                "FROM hr.ORDER_PRODUCT op " +
+                "JOIN hr.ORDER_DETAILS od ON op.ORDER_ID = od.ORDER_ID " +
+                "WHERE od.ORDER_DATE BETWEEN TO_DATE(?, 'YYYY-MM-DD') AND TO_DATE(?, 'YYYY-MM-DD') " +
+                "GROUP BY op.PRO_ID, op.PRO_NAME";
 
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setString(1, startDate);
+        ps.setString(2, endDate);
+
+        ResultSet rs = ps.executeQuery();
+        System.out.println("--- Sales Report from " + startDate + " to " + endDate + " ---");
+
+        boolean found = false;
+        while (rs.next()) {
+            found = true;
+            System.out.println("Product: " + rs.getString("PRO_NAME") +
+                    "-->  Total Sold: " + rs.getInt("total_qty"));
+        }
+        if (!found) {
+            System.out.println("No sales found for this period.");
+        }
     }
 
     // Top Selling Items
