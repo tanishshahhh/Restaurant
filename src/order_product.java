@@ -2,8 +2,8 @@ public class order_product {
     String order_product;
     int order_product_id;// (PK) bill no.
     int order_id;// (FK)
-    int product_id;// (FK)
-    int product_qty;
+    int pro_id;// (FK)
+    int pro_qty;
     int pro_rate;
     int price;
 
@@ -11,8 +11,8 @@ public class order_product {
         this.order_product = order_product;
         this.order_product_id = order_product_id;
         this.order_id = order_id;
-        this.product_id=product_id;
-        this.product_qty=product_qty;
+        this.pro_id=product_id;
+        this.pro_qty=product_qty;
         this.pro_rate=pro_rate;
         this.price=price;
     }
@@ -45,20 +45,20 @@ public class order_product {
         this.order_id = order_id;
     }
 
-    public int getProduct_id() {
-        return product_id;
+    public int getpro_id() {
+        return pro_id;
     }
 
-    public void setProduct_id(int product_id) {
-        this.product_id = product_id;
+    public void setpro_id(int product_id) {
+        this.pro_id = product_id;
     }
 
     public int getProduct_qty() {
-        return product_qty;
+        return pro_qty;
     }
 
     public void setProduct_qty(int product_qty) {
-        this.product_qty = product_qty;
+        this.pro_qty = product_qty;
     }
 
     public int getPro_rate() {
@@ -76,4 +76,6 @@ public class order_product {
     public void setPrice(int price) {
         this.price = price;
     }
+
+
 }

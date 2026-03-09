@@ -18,6 +18,7 @@ public class Main {
 
             System.out.print("Select Category: ");
             mainChoice = sc.nextInt();
+
             switch (mainChoice) {
                 case 1:
                     int productChoice;
@@ -34,21 +35,26 @@ public class Main {
 
                         switch (productChoice) {
                             case 1:
-                                product pInsert = new product();
-                                System.out.print("Enter Product ID: ");
-                                pInsert.setPro_id(sc.nextInt());
-                                sc.nextLine();
-                                System.out.print("Enter Product Name: ");
-                                pInsert.setPro_name(sc.nextLine());
-                                System.out.print("Enter Product Quantity: ");
-                                pInsert.setPro_qty(sc.nextInt());
-                                crud.insertProduct(con, pInsert);
+                                String addProduct;
+                                do {
+                                    product pInsert = new product();
+                                    System.out.print("Enter Product ID: ");
+                                    pInsert.setPro_id(sc.nextInt());
+                                    sc.nextLine(); // Clear buffer
+                                    System.out.print("Enter Product Name: ");
+                                    pInsert.setPro_name(sc.nextLine());
+                                    System.out.print("Enter Product Quantity: ");
+                                    pInsert.setPro_qty(sc.nextInt());
+                                    crud.insertProduct(con, pInsert);
+                                    System.out.println("Do you want to add new product (y/n):");
+                                    addProduct = sc.next();
+                                } while (addProduct.equalsIgnoreCase("y"));
                                 break;
                             case 2:
                                 product pUpdate = new product();
                                 System.out.print("Enter Product ID to Update: ");
                                 pUpdate.setPro_id(sc.nextInt());
-                                sc.nextLine();
+                                sc.nextLine(); // Clear buffer
                                 System.out.print("Enter New Product Name: ");
                                 pUpdate.setPro_name(sc.nextLine());
                                 System.out.print("Enter New Product Quantity: ");
@@ -68,12 +74,15 @@ public class Main {
                                 int searchId = sc.nextInt();
                                 crud.searchProduct(con, searchId);
                                 break;
+                            case 6:
+                                break;
                             default:
                                 System.out.println("Invalid input");
                                 break;
                         }
                     } while (productChoice != 6);
                     break;
+
                 case 2:
                     int customerChoice;
                     do {
@@ -94,20 +103,19 @@ public class Main {
                                     customer cInsert = new customer();
                                     System.out.print("Enter Customer ID: ");
                                     cInsert.setCust_id(sc.nextInt());
-                                    sc.nextLine();
+                                    sc.nextLine(); // Clear buffer
                                     System.out.print("Enter Customer Name: ");
                                     cInsert.setCust_name(sc.nextLine());
                                     System.out.print("Enter Customer Number: ");
                                     cInsert.setCust_number(sc.nextInt());
-                                    sc.nextLine();
+                                    sc.nextLine(); // Clear buffer
                                     System.out.print("Enter Customer Address: ");
                                     cInsert.setCust_adress(sc.nextLine());
                                     crud.insertCustomer(con, cInsert);
                                     System.out.println("Inserted");
-
                                     System.out.println("Do you want to continue (y/n): ");
-                                    opt3= sc.next();
-                                }while(opt3.equalsIgnoreCase("y"));
+                                    opt3 = sc.next();
+                                } while (opt3.equalsIgnoreCase("y"));
                                 break;
                             case 2:
                                 String opt4;
@@ -115,19 +123,19 @@ public class Main {
                                     customer cUpdate = new customer();
                                     System.out.print("Enter Customer ID to Update: ");
                                     cUpdate.setCust_id(sc.nextInt());
-                                    sc.nextLine();
+                                    sc.nextLine(); // Clear buffer
                                     System.out.print("Enter New Customer Name: ");
                                     cUpdate.setCust_name(sc.nextLine());
                                     System.out.print("Enter New Customer Number: ");
                                     cUpdate.setCust_number(sc.nextInt());
-                                    sc.nextLine();
+                                    sc.nextLine(); // Clear buffer
                                     System.out.print("Enter New Customer Address: ");
                                     cUpdate.setCust_adress(sc.nextLine());
                                     crud.updateCustomer(con, cUpdate);
                                     System.out.println("Updated");
                                     System.out.println("Do you want to Continue (y/n):");
-                                    opt4= sc.next();
-                                }while(opt4.equalsIgnoreCase("y"));
+                                    opt4 = sc.next();
+                                } while (opt4.equalsIgnoreCase("y"));
                                 break;
                             case 3:
                                 System.out.print("Enter Customer ID to Delete: ");
@@ -142,66 +150,85 @@ public class Main {
                                 int searchId = sc.nextInt();
                                 crud.searchCustomer(con, searchId);
                                 break;
+                            case 6:
+                                break;
                             default:
                                 System.out.println("Invalid Input");
                                 break;
                         }
                     } while (customerChoice != 6);
                     break;
+
                 case 3:
-                    int OrderChoice;
-                    System.out.println("---Order Menu---");
-                    System.out.println("1.Insert Order");
-                    System.out.println("2.Delete Order");
-                    System.out.println("3.View Order");
-                    System.out.println("4.Search Order");
-                    System.out.println("5.Exit");
+                    int orderChoice;
+                    System.out.println("--- Order Menu ---");
+                    System.out.println("1. Insert Order\n2. Delete Order\n3. View Order\n4. Search Order\n5. Exit");
+                    System.out.print("Enter your input: ");
+                    orderChoice = sc.nextInt();
 
-                    System.out.println("Enter your input: ");
-                    OrderChoice=sc.nextInt();
-
-                    switch(OrderChoice){
+                    switch (orderChoice) {
                         case 1:
-                            String opt5;
-                            order_product cpInsert=new order_product();
-                            order_details cdInsert=new order_details();
+                            order_details cdInsert = new order_details();
+                            System.out.print("Enter order Id: ");
+                            int oId = sc.nextInt();
+                            cdInsert.setOrder_id(oId);
 
-                            System.out.println("Enter order Id");
-                            cdInsert.setOrder_id(sc.nextInt());
-                            System.out.println("Enter Cust Id");
+                            System.out.print("Enter Cust Id: ");
                             cdInsert.setCust_id(sc.nextInt());
-                            System.out.println("Enter Order Date (YYYY-MM-DD");
+
+                            System.out.print("Enter Order Date (YYYY-MM-DD): ");
                             cdInsert.setOrder_date(sc.next());
-                            cdInsert.setTax((int) (cdInsert.getFinal_bill()*0.18));
-                            cdInsert.setDiscount((int) (cdInsert.getFinal_bill() * 0.10));
+
+                            // --- STEP 1: Insert the "Parent" record immediately ---
+                            // We send 0 for totals now just to establish the ID in the database
+                            cdInsert.setFinal_bill(0);
+                            cdInsert.setTax(0);
+                            cdInsert.setDiscount(0);
+                            crud.insertOrder(con, cdInsert);
+                            System.out.println("Order header created. Now add items...");
 
                             String opt6;
-                            int sr=1;
-                            do{
-                                cpInsert.setOrder_product_id(sr);
-                                cdInsert.setOrder_id(cdInsert.getOrder_id());
-                                System.out.println("Enter Product Id:");
-                                cpInsert.setProduct_id(sc.nextInt());
-                                System.out.println("Enter Product Name: ");
-                                cpInsert.setOrder_product(sc.next());
-                                System.out.println("Enter product quantity:");
-                                cpInsert.setProduct_qty(sc.nextInt());
-                                System.out.println("Enter Product rate: ");
-                                cpInsert.setPro_rate(sc.nextInt());
-                                cpInsert.setPrice(cpInsert.getProduct_qty()*cpInsert.getPro_rate());
-                                sr++;
+                            double runningTotal = 0;
 
-                                System.out.println("do you want to add new product to bill (y/n): ");
-                                opt6=sc.next();
+                            do {
+                                order_product cpInsert = new order_product();
+                                cpInsert.setOrder_id(oId); // Link to the ID we just inserted
 
-                            }while(opt6.equalsIgnoreCase("y"));
+                                crud.AddOrderProduct(con, cpInsert);
+
+                                System.out.print("Select Product ID from list: ");
+                                cpInsert.setpro_id(sc.nextInt());
+
+                                System.out.print("Enter product quantity: ");
+                                int qty = sc.nextInt();
+                                cpInsert.setProduct_qty(qty);
+
+                                System.out.print("Enter Product rate: ");
+                                int rate = sc.nextInt();
+                                cpInsert.setPro_rate(rate);
+
+                                int itemPrice = qty * rate;
+                                cpInsert.setPrice(itemPrice);
+                                runningTotal += itemPrice;
+
+                                // --- STEP 2: Insert the "Child" record ---
+                                // This will now work because the ORDER_ID already exists in ORDER_DETAILS
+                                crud.insertOrderProduct(con, cpInsert);
+
+                                System.out.print("Add another product to this bill? (y/n): ");
+                                opt6 = sc.next();
+                            } while (opt6.equalsIgnoreCase("y"));
+
+                            // --- STEP 3: Use your new method to finalize the bill ---
+                            // This updates the 0s we inserted earlier with the real math
+                            crud.updateOrderTotals(con, oId, runningTotal);
+                            System.out.println("Order " + oId + " finalized with total: " + runningTotal);
                             break;
 
                         case 2:
-                            order_details cdDelete=new order_details();
-                            System.out.println("Enter Order id: ");
-                            cdDelete.setOrder_id(sc.nextInt());
-                            crud.deleteOrder(con,cdDelete.order_id);
+                            System.out.print("Enter Order ID to Delete: ");
+                            int orderIdDelete = sc.nextInt();
+                            crud.deleteOrder(con, orderIdDelete);
                             break;
 
                         case 3:
@@ -209,18 +236,20 @@ public class Main {
                             break;
 
                         case 4:
-                            order_details odSearch=new order_details();
-                            System.out.println("Enter Order Id:");
-                            odSearch.setOrder_id(sc.nextInt());
-                            crud.searchOrder(con,odSearch.order_id);
+                            System.out.print("Enter Order ID to Search: ");
+                            int orderIdSearch = sc.nextInt();
+                            crud.searchOrder(con, orderIdSearch);
                             break;
+
                         case 5:
-                            System.out.println("exiting..");
+                            System.out.println("Exiting Order Menu...");
                             break;
+
                         default:
                             System.out.println("Invalid input");
                             break;
                     }
+                    break;
 
                 case 4:
                     int reportChoice;
@@ -246,7 +275,7 @@ public class Main {
                                 order_details customOrder = new order_details();
                                 System.out.print("Enter Date (YYYY-MM-DD) for Sales Report: ");
                                 customOrder.setOrder_date(sc.next());
-                                crud.MonthlySales(con, customOrder);
+                                crud.CustomizedSales(con, customOrder);
                                 break;
                             case 3:
                                 crud.topSellingItems(con);
@@ -255,7 +284,6 @@ public class Main {
                                 crud.leastSellingItems(con);
                                 break;
                             case 5:
-                                System.out.println("exiting..");
                                 break;
                             default:
                                 System.out.println("Invalid Input");
@@ -273,5 +301,7 @@ public class Main {
                     break;
             }
         } while (mainChoice != 5);
+
+        con.close();
     }
 }
