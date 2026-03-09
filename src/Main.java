@@ -40,7 +40,6 @@ public class Main {
                                     product pInsert = new product();
                                     System.out.print("Enter Product ID: ");
                                     pInsert.setPro_id(sc.nextInt());
-                                    sc.nextLine(); // Clear buffer
                                     System.out.print("Enter Product Name: ");
                                     pInsert.setPro_name(sc.nextLine());
                                     System.out.print("Enter Product Quantity: ");
@@ -54,7 +53,6 @@ public class Main {
                                 product pUpdate = new product();
                                 System.out.print("Enter Product ID to Update: ");
                                 pUpdate.setPro_id(sc.nextInt());
-                                sc.nextLine(); // Clear buffer
                                 System.out.print("Enter New Product Name: ");
                                 pUpdate.setPro_name(sc.nextLine());
                                 System.out.print("Enter New Product Quantity: ");
@@ -86,13 +84,16 @@ public class Main {
                 case 2:
                     int customerChoice;
                     do {
-                        System.out.println("--- CUSTOMER MENU ---");
+                        System.out.println("=======================");
+                        System.out.println("\t\tCUSTOMER MENU ");
+                        System.out.println("=======================");
                         System.out.println("1. INSERT CUSTOMER");
                         System.out.println("2. UPDATE CUSTOMER");
                         System.out.println("3. DELETE CUSTOMER");
                         System.out.println("4. VIEW CUSTOMERS");
                         System.out.println("5. SEARCH CUSTOMER");
                         System.out.println("6. BACK");
+                        System.out.println("=======================");
                         System.out.print("Select Option: ");
                         customerChoice = sc.nextInt();
 
@@ -103,16 +104,13 @@ public class Main {
                                     customer cInsert = new customer();
                                     System.out.print("Enter Customer ID: ");
                                     cInsert.setCust_id(sc.nextInt());
-                                    sc.nextLine(); // Clear buffer
                                     System.out.print("Enter Customer Name: ");
                                     cInsert.setCust_name(sc.nextLine());
                                     System.out.print("Enter Customer Number: ");
                                     cInsert.setCust_number(sc.nextInt());
-                                    sc.nextLine(); // Clear buffer
                                     System.out.print("Enter Customer Address: ");
                                     cInsert.setCust_adress(sc.nextLine());
                                     crud.insertCustomer(con, cInsert);
-                                    System.out.println("Inserted");
                                     System.out.println("Do you want to continue (y/n): ");
                                     opt3 = sc.next();
                                 } while (opt3.equalsIgnoreCase("y"));
@@ -123,12 +121,10 @@ public class Main {
                                     customer cUpdate = new customer();
                                     System.out.print("Enter Customer ID to Update: ");
                                     cUpdate.setCust_id(sc.nextInt());
-                                    sc.nextLine(); // Clear buffer
                                     System.out.print("Enter New Customer Name: ");
                                     cUpdate.setCust_name(sc.nextLine());
                                     System.out.print("Enter New Customer Number: ");
                                     cUpdate.setCust_number(sc.nextInt());
-                                    sc.nextLine(); // Clear buffer
                                     System.out.print("Enter New Customer Address: ");
                                     cUpdate.setCust_adress(sc.nextLine());
                                     crud.updateCustomer(con, cUpdate);
@@ -161,8 +157,15 @@ public class Main {
 
                 case 3:
                     int orderChoice;
-                    System.out.println("--- Order Menu ---");
-                    System.out.println("1. Insert Order\n2. Delete Order\n3. View Order\n4. Search Order\n5. Exit");
+                    System.out.println("=======================");
+                    System.out.println("\t\tOrder Menu ");
+                    System.out.println("=======================");
+                    System.out.println("1. Insert Order");
+                    System.out.println("2. Delete Order");
+                    System.out.println("3. View Order");
+                    System.out.println("4. Search Order");
+                    System.out.println("5. Exit");
+                    System.out.println("=======================");
                     System.out.print("Enter your input: ");
                     orderChoice = sc.nextInt();
 
@@ -179,8 +182,6 @@ public class Main {
                             System.out.print("Enter Order Date (YYYY-MM-DD): ");
                             cdInsert.setOrder_date(sc.next());
 
-                            // --- STEP 1: Insert the "Parent" record immediately ---
-                            // We send 0 for totals now just to establish the ID in the database
                             cdInsert.setFinal_bill(0);
                             cdInsert.setTax(0);
                             cdInsert.setDiscount(0);
@@ -192,7 +193,7 @@ public class Main {
 
                             do {
                                 order_product cpInsert = new order_product();
-                                cpInsert.setOrder_id(oId); // Link to the ID we just inserted
+                                cpInsert.setOrder_id(oId);
 
                                 crud.AddOrderProduct(con, cpInsert);
 
@@ -211,16 +212,14 @@ public class Main {
                                 cpInsert.setPrice(itemPrice);
                                 runningTotal += itemPrice;
 
-                                // --- STEP 2: Insert the "Child" record ---
-                                // This will now work because the ORDER_ID already exists in ORDER_DETAILS
+
                                 crud.insertOrderProduct(con, cpInsert);
 
                                 System.out.print("Add another product to this bill? (y/n): ");
                                 opt6 = sc.next();
                             } while (opt6.equalsIgnoreCase("y"));
 
-                            // --- STEP 3: Use your new method to finalize the bill ---
-                            // This updates the 0s we inserted earlier with the real math
+
                             crud.updateOrderTotals(con, oId, runningTotal);
                             System.out.println("Order " + oId + " finalized with total: " + runningTotal);
                             break;
@@ -254,12 +253,15 @@ public class Main {
                 case 4:
                     int reportChoice;
                     do {
-                        System.out.println("--- REPORTS ---");
+                        System.out.println("=======================");
+                        System.out.println("\t\tREPORTS");
+                        System.out.println("=======================");
                         System.out.println("1. Daily sales");
                         System.out.println("2. Customized sales according to date");
                         System.out.println("3. Top selling items");
                         System.out.println("4. Least selling items");
                         System.out.println("5. BACK");
+                        System.out.println("=======================");
 
                         System.out.print("Select Option: ");
                         reportChoice = sc.nextInt();

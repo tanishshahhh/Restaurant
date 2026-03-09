@@ -123,7 +123,6 @@ public class Crud {
     // ORDER CRUD
 
     public void insertOrder(Connection con, order_details o) throws Exception {
-        // Matches: ORDER_ID, CUST_ID, ORDER_DATE, TOTAL, TAX, DISCOUNT, FINAL
         PreparedStatement ps = con.prepareStatement("INSERT INTO hr.ORDER_DETAILS VALUES(?,?,TO_DATE(?,'YYYY-MM-DD'),?,?,?,?)");
 
         ps.setInt(1, o.getOrder_id());
@@ -197,7 +196,6 @@ public class Crud {
     }
 
     public void insertOrderProduct(Connection con, order_product op) throws Exception {
-        // Corrected to exactly 6 columns as per your screenshot
         String sql = "INSERT INTO hr.ORDER_PRODUCT (ORDER_ID, PRO_ID, PRO_NAME, PRO_QTY, PRO_RATE, PRICE) " +
                 "VALUES (?, ?, ?, ?, ?, ?)";
 
@@ -216,7 +214,6 @@ public class Crud {
 
     public void AddOrderProduct(Connection con, order_product op) throws SQLException {
         Statement st = con.createStatement();
-        // Table name corrected to match your screenshot
         ResultSet rs = st.executeQuery("SELECT PRO_ID, PRO_NAME FROM hr.PRODUCT_RESTAURANT");
         System.out.println("--- AVAILABLE PRODUCTS ---");
         while(rs.next()) {
@@ -268,7 +265,6 @@ public class Crud {
 
     // Top Selling Items
     public void topSellingItems(Connection con) throws Exception {
-        // FIXED: Changed product_id to PRO_ID and used correct table names
         String query = "SELECT p.PRO_NAME, SUM(op.PRO_QTY) as total_sold " +
                 "FROM hr.ORDER_PRODUCT op JOIN hr.PRODUCT_RESTAURANT p ON op.PRO_ID = p.PRO_ID " +
                 "GROUP BY p.PRO_NAME ORDER BY total_sold DESC";
@@ -282,7 +278,6 @@ public class Crud {
 
     // Least Selling Items
     public void leastSellingItems(Connection con) throws Exception {
-        // FIXED: Changed product_id to PRO_ID
         String query = "SELECT p.PRO_NAME, SUM(op.PRO_QTY) as total_sold " +
                 "FROM hr.ORDER_PRODUCT op JOIN hr.PRODUCT_RESTAURANT p ON op.PRO_ID = p.PRO_ID " +
                 "GROUP BY p.PRO_NAME ORDER BY total_sold ASC";
