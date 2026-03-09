@@ -204,7 +204,6 @@ public class Main {
                             cdInsert.setTax(0);
                             cdInsert.setDiscount(0);
                             crud.insertOrder(con, cdInsert);
-                            System.out.println("Order header created. Now add items...");
 
                             String opt6;
                             double runningTotal = 0;
@@ -271,15 +270,15 @@ public class Main {
                 case 4:
                     int reportChoice;
                     do {
-                        System.out.println("=======================");
+                        System.out.println("=========================================");
                         System.out.println("\t\tREPORTS");
-                        System.out.println("=======================");
+                        System.out.println("=========================================");
                         System.out.println("1. Daily sales");
                         System.out.println("2. Customized sales according to date");
                         System.out.println("3. Top selling items");
                         System.out.println("4. Least selling items");
                         System.out.println("5. BACK");
-                        System.out.println("=======================");
+                        System.out.println("=========================================");
 
                         System.out.print("Select Option: ");
                         reportChoice = sc.nextInt();

@@ -217,7 +217,7 @@ public class Crud {
         ResultSet rs = st.executeQuery("SELECT PRO_ID, PRO_NAME FROM hr.PRODUCT_RESTAURANT");
         System.out.println("--- AVAILABLE PRODUCTS ---");
         while(rs.next()) {
-            System.out.println("ID: " + rs.getInt("PRO_ID") + " | Name: " + rs.getString("PRO_NAME"));
+            System.out.println("ID: " + rs.getInt("PRO_ID") + " Name: " + rs.getString("PRO_NAME"));
         }
     }
 
