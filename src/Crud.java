@@ -196,17 +196,15 @@ public class Crud {
     }
 
     public void insertOrderProduct(Connection con, order_product op) throws Exception {
-        String sql = "INSERT INTO hr.ORDER_PRODUCT (ORDER_ID, PRO_ID, PRO_NAME, PRO_QTY, PRO_RATE, PRICE) " +
-                "VALUES (?, ?, ?, ?, ?, ?)";
 
-        PreparedStatement ps = con.prepareStatement(sql);
+        PreparedStatement ps = con.prepareStatement("INSERT INTO hr.ORDER_PRODUCT VALUES ( ?, ?, ?, ?, ?, ?)");
 
         ps.setInt(1, op.getOrder_id());
         ps.setInt(2, op.getpro_id());
-        ps.setString(3, "Product");
-        ps.setInt(4, op.getProduct_qty());
-        ps.setInt(5, op.getPro_rate());
-        ps.setInt(6, op.getPrice());
+        ps.setInt(3, op.getProduct_qty());
+        ps.setInt(4, op.getPro_rate());
+        ps.setInt(5, op.getPrice());
+        ps.setString(6, "Product");
 
         ps.executeUpdate();
         System.out.println("Item added to Order.");
@@ -238,12 +236,12 @@ public class Crud {
 
     // daily sales
     public void dailySales(Connection con, order_details o) throws SQLException {
-        String query = "SELECT op.product_id, p.pro_name, SUM(op.product_qty) " +
+        String query = "SELECT op.pro_id, p.pro_name, SUM(op.product_qty) " +
                 "FROM hr.order_product op " +
                 "JOIN hr.order_details od ON op.order_id = od.order_id " +
-                "JOIN hr.PRODUCT_RESTAURANT p ON op.product_id = p.pro_id " +
+                "JOIN hr.PRODUCT_RESTAURANT p ON op.pro_id = p.pro_id " +
                 "WHERE od.order_date = ? " +
-                "GROUP BY op.product_id, p.pro_name";
+                "GROUP BY op.pro_id, p.pro_name";
 
         PreparedStatement ps = con.prepareStatement(query);
         ps.setString(1, o.getOrder_date());

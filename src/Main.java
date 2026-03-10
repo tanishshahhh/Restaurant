@@ -49,7 +49,7 @@ public class Main {
                                     sc.nextLine();
                                     System.out.print("Enter Product Name: ");
                                     pInsert.setPro_name(sc.nextLine());
-                                    sc.nextLine();
+                                   // sc.nextLine();
                                     System.out.print("Enter Product Quantity: ");
                                     pInsert.setPro_qty(sc.nextInt());
                                     crud.insertProduct(con, pInsert);
