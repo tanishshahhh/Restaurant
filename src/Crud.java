@@ -128,10 +128,10 @@ public class Crud {
         ps.setInt(1, o.getOrder_id());
         ps.setInt(2, o.getCust_id());
         ps.setString(3, o.getOrder_date());
-        ps.setInt(4, o.getFinal_bill() + o.getDiscount() - o.getTax()); // Logical Total
+        ps.setInt(4, o.getFinal_bill() + o.getDiscount() - o.getTax());
         ps.setInt(5, o.getTax());
         ps.setInt(6, o.getDiscount());
-        ps.setInt(7, o.getFinal_bill()); // Maps to your 'FINAL' column
+        ps.setInt(7, o.getFinal_bill());
 
         ps.executeUpdate();
         System.out.println("Main Order Recorded.");
@@ -164,17 +164,41 @@ public class Crud {
     }
 
     public void viewOrders(Connection con) throws Exception {
+
         Statement st = con.createStatement();
-        ResultSet rs = st.executeQuery("select * from hr.ORDER_DETAILS");
+
+        ResultSet rs = st.executeQuery(
+                "SELECT od.ORDER_ID, od.ORDER_DATE, od.CUST_ID, " +
+                        "op.PRO_ID, p.PRO_NAME, op.PRO_QTY, op.PRO_RATE, op.PRICE, " +
+                        "od.TOTAL, od.TAX, od.DISCOUNT, od.FINAL " +
+                        "FROM hr.ORDER_PRODUCT op " +
+                        "JOIN hr.ORDER_DETAILS od ON op.ORDER_ID = od.ORDER_ID " +
+                        "JOIN hr.PRODUCT_RESTAURANT p ON op.PRO_ID = p.PRO_ID " +
+                        "ORDER BY od.ORDER_ID"
+        );
+
+        int lastOrderId = 0;
+
         while (rs.next()) {
-            System.out.println("Order ID: " + rs.getInt("ORDER_ID"));
-            System.out.println("Customer ID: " + rs.getInt("CUST_ID"));
-            System.out.println("Order Date: " + rs.getString("ORDER_DATE"));
-            System.out.println("Total Amount: " + rs.getInt("TOTAL"));
-            System.out.println("Tax: " + rs.getInt("TAX"));
-            System.out.println("Discount: " + rs.getInt("DISCOUNT"));
-            System.out.println("Final Bill: " + rs.getInt("FINAL")); // Matches FINAL column
-            System.out.println("---------------------------");
+            int currentOrderId = rs.getInt("ORDER_ID");
+            if (currentOrderId != lastOrderId) {
+                System.out.println("\nOrder ID: " + currentOrderId);
+                System.out.println("Order Date: " + rs.getDate("ORDER_DATE"));
+                System.out.println("Customer ID: " + rs.getInt("CUST_ID"));
+                System.out.println("Total: " + rs.getInt("TOTAL"));
+                System.out.println("Tax: " + rs.getInt("TAX"));
+                System.out.println("Discount: " + rs.getInt("DISCOUNT"));
+                System.out.println("Final Bill: " + rs.getInt("FINAL"));
+                System.out.println("Products:");
+                lastOrderId = currentOrderId;
+            }
+            System.out.println(
+                    "Product ID: " + rs.getInt("PRO_ID") +
+                            " Name: " + rs.getString("PRO_NAME") +
+                            " Qty: " + rs.getInt("PRO_QTY") +
+                            " Rate: " + rs.getInt("PRO_RATE") +
+                            " Price: " + rs.getInt("PRICE")
+            );
         }
     }
 
@@ -192,6 +216,40 @@ public class Crud {
             System.out.println("Tax: " + rs.getInt(5));
             System.out.println("Discount: " + rs.getInt(6));
             System.out.println("Final Bill: " + rs.getInt(7));
+        }
+    }
+
+    public void searchOrder_customer(Connection con, int id) throws SQLException {
+
+        PreparedStatement ps = con.prepareStatement(
+                "SELECT * " +
+                        "FROM hr.order_product op " +
+                        "JOIN hr.order_details od " +
+                        "ON op.order_id = od.order_id " +
+                        "WHERE od.cust_id = ?");
+
+        ps.setInt(1, id);
+
+        ResultSet rs = ps.executeQuery();
+
+        while (rs.next()) {
+
+            System.out.println("Order ID: " + rs.getInt("ORDER_ID"));
+            System.out.println("Product ID: " + rs.getInt("PRO_ID"));
+            System.out.println("Product Name: " + rs.getString("PRO_NAME"));
+            System.out.println("Product Qty: " + rs.getInt("PRO_QTY"));
+            System.out.println("Product Rate: " + rs.getInt("PRO_RATE"));
+            System.out.println("Product Price: " + rs.getInt("PRICE"));
+
+            System.out.println("Customer ID: " + rs.getInt("CUST_ID"));
+            System.out.println("Order Date: " + rs.getDate("ORDER_DATE"));
+
+            System.out.println("Total Amount: " + rs.getInt("TOTAL"));
+            System.out.println("Tax: " + rs.getInt("TAX"));
+            System.out.println("Discount: " + rs.getInt("DISCOUNT"));
+            System.out.println("Final Bill: " + rs.getInt("FINAL"));
+
+            System.out.println("---------------------------");
         }
     }
 
